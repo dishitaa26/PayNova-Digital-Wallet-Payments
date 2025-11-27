@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Add Money — PayNova</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="app-root">
+  <aside class="sidebar">
+    <div class="brand">PayNova</div>
+    <nav>
+      <a class="nav-link" href="dashboard.html">Dashboard</a>
+      <a class="nav-link active" href="add-money.html">Add Money</a>
+      <a class="nav-link" href="send-money.html">Send</a>
+      <a class="nav-link" href="support.html">Support</a>
+      <a class="nav-link" href="settings.html">Settings</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <h2>Add Money</h2>
+      <div class="right-controls">
+        <button class="btn small" onclick="location.href='dashboard.html'">Back</button>
+      </div>
+    </header>
+
+    <section class="panel glass-sm">
+      <form id="addForm" class="form-grid" onsubmit="submitAdd(event)">
+        <div class="form-row">
+          <label>Amount (₹)</label>
+          <input id="addAmount" type="number" min="1" required />
+        </div>
+
+        <div class="form-row">
+          <label>Method</label>
+          <select id="addMethod" onchange="toggleMethodFields()">
+            <option value="upi">UPI</option>
+            <option value="card">Card</option>
+            <option value="netbank">Net Banking</option>
+          </select>
+        </div>
+
+        <div id="methodFields">
+          <div class="form-row" id="upiRow">
+            <label>UPI ID</label>
+            <input id="upiId" placeholder="example@upi" />
+          </div>
+
+          <div class="form-row hidden" id="cardRow">
+            <label>Card Number</label>
+            <input id="cardNumber" placeholder="xxxx xxxx xxxx xxxx" maxlength="19" />
+            <label>Expiry</label>
+            <input id="cardExp" placeholder="MM/YY" maxlength="5"/>
+            <label>CVV</label>
+            <input id="cardCvv" maxlength="3" placeholder="123"/>
+          </div>
+
+          <div class="form-row hidden" id="netRow">
+            <label>Bank</label>
+            <input id="bankName" placeholder="Your bank name"/>
+            <label>Account / UPI</label>
+            <input id="bankAcc" placeholder="Account number or UPI"/>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn" type="submit">Confirm & Add</button>
+          <button class="btn ghost" type="button" onclick="location.href='dashboard.html'">Cancel</button>
+        </div>
+
+        <p id="addMsg" class="muted"></p>
+      </form>
+    </section>
+  </main>
+
+<script src="app.js"></script>
+</body>
+</html>

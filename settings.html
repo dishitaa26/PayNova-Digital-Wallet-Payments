@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Settings — PayNova</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="app-root">
+  <aside class="sidebar">
+    <div class="brand">PayNova</div>
+    <nav>
+      <a class="nav-link" href="dashboard.html">Dashboard</a>
+      <a class="nav-link" href="add-money.html">Add</a>
+      <a class="nav-link" href="send-money.html">Send</a>
+      <a class="nav-link" href="support.html">Support</a>
+      <a class="nav-link active" href="settings.html">Settings</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <h2>Settings</h2>
+    </header>
+
+    <section class="panel glass-sm">
+      <div class="form-row">
+        <label>Theme</label>
+        <button class="btn" onclick="toggleTheme()">Toggle Dark / Light</button>
+      </div>
+
+      <div class="form-row">
+        <label>Notifications</label>
+        <input id="notif" type="checkbox" onchange="toggleNotif(this.checked)" />
+      </div>
+
+      <div class="form-row">
+        <label>Clear all data</label>
+        <button class="btn ghost" onclick="clearAll()">Clear Storage</button>
+      </div>
+    </section>
+  </main>
+
+<script src="app.js"></script>
+</body>
+</html>
+

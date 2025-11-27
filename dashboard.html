@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Dashboard — PayNova</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="app-root">
+  <aside class="sidebar">
+    <div class="brand">PayNova</div>
+    <nav>
+      <a class="nav-link active" href="dashboard.html">Dashboard</a>
+      <a class="nav-link" href="add-money.html">Add Money</a>
+      <a class="nav-link" href="send-money.html">Send</a>
+      <a class="nav-link" href="support.html">Support</a>
+      <a class="nav-link" href="settings.html">Settings</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="left-controls">
+        <h2>Dashboard</h2>
+      </div>
+      <div class="right-controls">
+        <button class="btn small" onclick="location.href='add-money.html'">+ Add</button>
+        <button class="btn small ghost" onclick="location.href='send-money.html'">Send</button>
+      </div>
+    </header>
+
+    <section class="row cards">
+      <div class="card glass balance-card">
+        <div class="card-top">
+          <div>
+            <small>Current Balance</small>
+            <h1 id="balance-amount">₹0.00</h1>
+          </div>
+          <div class="card-actions">
+            <button class="btn small" onclick="copyBalance()">Copy</button>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <small>Income (30d)</small>
+            <div id="stat-income">₹0</div>
+          </div>
+          <div class="stat">
+            <small>Spend (30d)</small>
+            <div id="stat-spend">₹0</div>
+          </div>
+          <div class="stat">
+            <small>Transactions</small>
+            <div id="stat-count">0</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card glass transactions-card">
+        <div class="card-top">
+          <h3>Recent Transactions</h3>
+          <div class="filters">
+            <select id="txFilter" onchange="applyFilter()">
+              <option value="all">All</option>
+              <option value="sent">Sent</option>
+              <option value="received">Received</option>
+              <option value="topup">Top-up</option>
+            </select>
+            <input id="searchTx" placeholder="Search name / note" oninput="applyFilter()" />
+          </div>
+        </div>
+
+        <div class="tx-list" id="txList">
+        </div>
+      </div>
+    </section>
+
+    <div id="txModal" class="modal hidden">
+      <div class="modal-card glass-sm">
+        <h3 id="txModalTitle">Transaction</h3>
+        <div id="txModalBody"></div>
+        <div class="modal-actions">
+          <button class="btn" onclick="closeModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </main>
+<script src="app.js"></script>
+</body>
+</html>

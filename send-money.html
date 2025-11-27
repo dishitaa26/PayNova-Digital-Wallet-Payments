@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Send Money — PayNova</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="app-root">
+  <aside class="sidebar">
+    <div class="brand">PayNova</div>
+    <nav>
+      <a class="nav-link" href="dashboard.html">Dashboard</a>
+      <a class="nav-link" href="add-money.html">Add</a>
+      <a class="nav-link active" href="send-money.html">Send</a>
+      <a class="nav-link" href="support.html">Support</a>
+      <a class="nav-link" href="settings.html">Settings</a>
+      
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <h2>Send Money</h2>
+      <div class="right-controls">
+        <button class="btn small" onclick="location.href='dashboard.html'">Back</button>
+      </div>
+    </header>
+
+    <section class="panel glass-sm">
+      <form id="sendForm" class="form-grid" onsubmit="submitSend(event)">
+        <div class="form-row">
+          <label>Recipient (name or UPI)</label>
+          <input id="recipient" list="contacts" autocomplete="off" required />
+          <datalist id="contacts"></datalist>
+        </div>
+
+        <div class="form-row">
+          <label>Amount (₹)</label>
+          <input id="sendAmount" type="number" min="1" required />
+        </div>
+
+        <div class="form-row">
+          <label>Category</label>
+          <select id="category">
+            <option value="general">General</option>
+            <option value="food">Food</option>
+            <option value="shopping">Shopping</option>
+            <option value="bills">Bills</option>
+            <option value="gift">Gift</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label>Note (optional)</label>
+          <input id="note" placeholder="For what? (e.g., lunch)" />
+        </div>
+
+        <div class="form-row fee-row">
+          <div>Fee:</div>
+          <div id="feePreview">₹0</div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn">Send Now</button>
+          <button type="button" class="btn ghost" onclick="location.href='dashboard.html'">Cancel</button>
+        </div>
+
+        <p id="sendMsg" class="muted"></p>
+      </form>
+    </section>
+  </main>
+
+<script src="app.js"></script>
+</body>
+</html>

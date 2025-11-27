@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Support — PayNova</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="app-root">
+  <aside class="sidebar">
+    <div class="brand">PayNova</div>
+    <nav>
+      <a class="nav-link" href="dashboard.html">Dashboard</a>
+      <a class="nav-link" href="add-money.html">Add</a>
+      <a class="nav-link" href="send-money.html">Send</a>
+      <a class="nav-link active" href="support.html">Support</a>
+      <a class="nav-link" href="settings.html">Settings</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <h2>Support</h2>
+      <div class="right-controls"></div>
+    </header>
+
+    <section class="panel glass-sm">
+      <form id="supportForm" onsubmit="submitSupport(event)">
+        <div class="form-row">
+          <label>Full name</label>
+          <input id="supName" required />
+        </div>
+
+        <div class="form-row">
+          <label>Email</label>
+          <input id="supEmail" type="email" required />
+        </div>
+
+        <div class="form-row">
+          <label>Issue</label>
+          <textarea id="supMsg" rows="5" required></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn" type="submit">Create Ticket</button>
+        </div>
+
+        <p id="supMsgInfo" class="muted"></p>
+      </form>
+    </section>
+
+  </main>
+
+<script src="app.js"></script>
+</body>
+</html>
+
