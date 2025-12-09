@@ -1,4 +1,5 @@
 "use strict";
+
 const uid = (prefix="id") => `${prefix}_${Math.random().toString(36).slice(2,9)}`;
 const $ = id => document.getElementById(id);
 const lsGet = (k, fallback) => {
@@ -37,7 +38,7 @@ function animateNumber(el, from, to, ms=800){
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-
+ 
   const miniBal = $('mini-balance');
   const miniCnt = $('mini-count');
   if(miniBal) {
@@ -48,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if($('balance-amount')) renderDashboard();
 
   if($('addForm')) {
-    
+
     window.toggleMethodFields = function(){
       const m = $('addMethod').value;
       ['upiRow','cardRow','netRow'].forEach(id => $(id).classList.add('hidden'));
@@ -61,9 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const amt = Math.round(Number($('addAmount').value) * 100) / 100;
       if(!amt || amt <= 0) { $('addMsg').textContent = "Enter a valid amount"; return; }
-     
-      const method = $('addMethod').value;
       
+      const method = $('addMethod').value;
+
       const tx = getTx();
       const t = { id: uid('tx'), type:'topup', amount: amt, user: 'You', category:'topup', note:`Added via ${method}`, date: new Date().toISOString() };
       tx.unshift(t); saveTx(tx);
@@ -74,9 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if($('sendForm')) {
+    
     const contacts = Array.from(new Set(getTx().map(t=>t.user))).filter(Boolean);
     const datalist = $('contacts');
     datalist.innerHTML = contacts.map(c => `<option value="${c}">`).join('');
+    
     const feePreview = $('feePreview');
     const updateFee = () => {
       const amt = Number($('sendAmount').value || 0);
@@ -92,6 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const note = $('note').value;
       if(!recipient || !amount || amount <= 0){ $('sendMsg').textContent = "Enter valid recipient & amount"; return; }
       if(amount > getBalance()){ $('sendMsg').textContent = "Insufficient balance"; return; }
+      
       const tx = getTx();
       const t = { id: uid('tx'), type:'sent', amount, user: recipient, category, note, date: new Date().toISOString() };
       tx.unshift(t); saveTx(tx);
@@ -100,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(()=> location.href='dashboard.html', 900);
     }
   }
+
   if($('txList')) {
     window.applyFilter = function(){
       const q = $('searchTx').value.toLowerCase();
@@ -125,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.closeModal = function(){ $('txModal').classList.add('hidden'); }
     applyFilter();
   }
+
   if($('supportForm')) {
     window.submitSupport = function(e){
       e.preventDefault();
@@ -155,13 +161,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     renderTickets();
   }
-  if(window.toggleTheme){
-    
-  }
-  if($('barChart') || $('pieChart')) {
-    renderAnalytics();
-  }
-
 
 }); 
 function renderDashboard(){
@@ -198,47 +197,7 @@ function renderTxList(list){
     </div>
   `).join('');
 }
-function renderAnalytics(){
-  const tx = getTx();
-  const byMonth = {};
-  for(let i=0;i<6;i++){
-    const d = new Date(); d.setMonth(d.getMonth()-i); const k = `${d.getFullYear()}-${d.getMonth()+1}`;
-    byMonth[k] = {income:0, spend:0, label: d.toLocaleString('default',{month:'short'}) + ' ' + d.getFullYear()};
-  }
-  tx.forEach(t=>{
-    const d = new Date(t.date); const k = `${d.getFullYear()}-${d.getMonth()+1}`;
-    if(!byMonth[k]) return;
-    if(t.type==='sent') byMonth[k].spend += t.amount;
-    else byMonth[k].income += t.amount;
-  });
-  const labels = Object.keys(byMonth).reverse().map(k=>byMonth[k].label);
-  const incomeData = Object.keys(byMonth).reverse().map(k=>byMonth[k].income);
-  const spendData = Object.keys(byMonth).reverse().map(k=>byMonth[k].spend);
-
-  // bar chart
-  const barCtx = $('barChart').getContext('2d');
-  new Chart(barCtx, {
-    type:'bar',
-    data:{
-      labels,
-      datasets:[
-        {label:'Income', data: incomeData, backgroundColor:'rgba(18,230,185,0.9)'},
-        {label:'Spend', data: spendData, backgroundColor:'rgba(255,138,138,0.9)'}
-      ]
-    },
-    options:{responsive:true, maintainAspectRatio:false}
-  });
-  const cat = {};
-  tx.forEach(t => { cat[t.category] = (cat[t.category]||0) + t.amount; });
-  const pieCtx = $('pieChart').getContext('2d');
-  new Chart(pieCtx, {
-    type:'pie',
-    data:{
-      labels:Object.keys(cat),
-      datasets:[{data:Object.values(cat), backgroundColor:['#13e4c6','#7ef0b7','#ffd27f','#ff8a8a','#b8c7ff']}]
-    },
-    options:{responsive:true, maintainAspectRatio:false}
-  });
+{
   const topNode = $('topTx');
   const top = tx.slice().sort((a,b)=>b.amount - a.amount).slice(0,6);
   topNode.innerHTML = top.map(t=>`<div class="tx-row"><div><strong>${t.user}</strong> • ${t.category}</div><div>${money(t.amount)}</div></div>`).join('');
@@ -256,6 +215,7 @@ function toggleTheme(){
   document.body.classList.toggle('light-theme', s.theme==='light');
 }
 function toggleNotif(v){ const s = lsGet('pn_settings', {}); s.notif = !!v; lsSet('pn_settings', s); }
+
 window.renderDashboard = renderDashboard;
 window.renderAnalytics = renderAnalytics;
 window.applyFilter = window.applyFilter || function(){};
